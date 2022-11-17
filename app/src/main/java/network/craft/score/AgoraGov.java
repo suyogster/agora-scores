@@ -30,11 +30,11 @@ public interface AgoraGov {
      * Admin-only method.
      *
      * @param _address the address of the token contract to query
-     * @param _type IRC-2 or IRC-31
-     * @param _id (Optional) If the type is IRC-31, specify a pool id to query
+     * @param _type    IRC-2 or IRC-31
+     * @param _id      (Optional) If the type is IRC-31, specify a pool id to query
      */
     @External
-    void setGovernanceToken(Address _address, String _type, @Optional BigInteger _id);
+    void setGovernanceToken(Address _address, String _type, String name, @Optional BigInteger _id);
 
     /**
      * Sets the minimum required of tokens to submit a new proposal.

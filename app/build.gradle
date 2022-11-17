@@ -5,6 +5,7 @@ dependencies {
 
     testImplementation 'foundation.icon:javaee-unittest:0.9.5'
     testImplementation 'com.github.sink772:javaee-tokens:0.6.3'
+    implementation 'foundation.icon:javaee-scorex:0.5.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }
@@ -24,6 +25,7 @@ deployJar {
         }
         lisbon {
             uri = 'https://lisbon.net.solidwallet.io/api/v3'
+            to = 'cxfe44138a8387b853342728372864c9dc78de72bd'
             nid = 0x2
         }
         berlin {
@@ -35,8 +37,8 @@ deployJar {
             nid = 0x3
         }
     }
-    keystore = rootProject.hasProperty('keystoreName') ? "$keystoreName" : 'keystore_gochain.json'
-    password = rootProject.hasProperty('keystorePass') ? "$keystorePass" : 'gochain'
+    keystore = rootProject.hasProperty('keystoreName') ? "$keystoreName" : ''
+    password = rootProject.hasProperty('keystorePass') ? "$keystorePass" : ''
 }
 
 test {

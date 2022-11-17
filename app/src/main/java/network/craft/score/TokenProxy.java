@@ -24,23 +24,63 @@ import java.math.BigInteger;
 public class TokenProxy {
     public static final String IRC2 = "irc-2";
     public static final String IRC31 = "irc-31";
+    public static final String CROWN = "crown";
+    public static final String X_CROWN = "x_crown";
 
     private final Address address;
     private final String type;
-    private final BigInteger id;
+//    private final BigInteger id;
 
-    public TokenProxy(Address address, String type, BigInteger id) {
+    public TokenProxy(Address address, String type) {
+        Context.println("LOG 2 ---" + address + type);
         Context.require(address != null, "TokenAddressNotSet");
         this.address = address;
         this.type = type;
-        this.id = id;
+    }
+
+    public BigInteger getCurrentSnapshotId(Address caller) {
+        if (IRC2.equals(type)) {
+            return Context.call(BigInteger.class, address, "getCurrentSnapshotId", caller);
+        } else {
+            return BigInteger.ZERO;
+        }
+    }
+
+    // TODO: balanceOfCrownAt
+    public BigInteger balanceOfAt(Address holder, int votingSnapshotId) {
+        if (IRC2.equals(type)) {
+            return Context.call(BigInteger.class, address, "balanceOfAt", holder, votingSnapshotId);
+        } else {
+//            return Context.call(BigInteger.class, address, "balanceOf", holder, id);
+            return BigInteger.ZERO;
+        }
+    }
+
+    public BigInteger balanceOfCrownAt(Address holder, int votingSnapshotId) {
+        if (IRC2.equals(type)) {
+            return Context.call(BigInteger.class, address, "balanceOfCrownAt", holder, votingSnapshotId);
+        } else {
+//            return Context.call(BigInteger.class, address, "balanceOf", holder, id);
+            return BigInteger.ZERO;
+        }
     }
 
     public BigInteger balanceOf(Address holder) {
         if (IRC2.equals(type)) {
             return Context.call(BigInteger.class, address, "balanceOf", holder);
         } else {
-            return Context.call(BigInteger.class, address, "balanceOf", holder, id);
+//            return Context.call(BigInteger.class, address, "balanceOf", holder, id);
+            return BigInteger.ZERO;
         }
+    }
+
+    public BigInteger generateSnapshotAndFetchId() {
+        Context.println("LOG 3 --- generateSnapshot");
+        Context.call(BigInteger.class, address, "snapshot");
+        return Context.call(BigInteger.class, address, "getCurrentSnapshotId");
+    }
+
+    public BigInteger getCrownPerXCrown(Address bankAddress) {
+        return Context.call(BigInteger.class, bankAddress, "getCrownPerXCrown");
     }
 }

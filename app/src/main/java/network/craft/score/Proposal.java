@@ -36,13 +36,17 @@ public class Proposal {
     private final long endTime;
     private final String ipfsHash;
     private int status;
+    private final int crownSnapshotId;
+    private final int xCrownSnapshotId;
 
-    public Proposal(Address creator, long startTime, long endTime, String ipfsHash, int status) {
+    public Proposal(Address creator, long startTime, long endTime, String ipfsHash, int status, int crownSnapshotId, int xCrownSnapshotId) {
         this.creator = creator;
         this.startTime = startTime;
         this.endTime = endTime;
         this.ipfsHash = ipfsHash;
         this.status = status;
+        this.crownSnapshotId = crownSnapshotId;
+        this.xCrownSnapshotId = xCrownSnapshotId;
     }
 
     public Address getCreator() {
@@ -70,7 +74,7 @@ public class Proposal {
     }
 
     public static void writeObject(ObjectWriter w, Proposal p) {
-        w.writeListOf(p.creator, p.startTime, p.endTime, p.ipfsHash, p.status);
+        w.writeListOf(p.creator, p.startTime, p.endTime, p.ipfsHash, p.status, p.crownSnapshotId, p.xCrownSnapshotId);
     }
 
     public static Proposal readObject(ObjectReader r) {
@@ -80,9 +84,19 @@ public class Proposal {
                 r.readLong(),
                 r.readLong(),
                 r.readString(),
+                r.readInt(),
+                r.readInt(),
                 r.readInt()
         );
         r.end();
         return p;
+    }
+
+    public int getCrownSnapshotId() {
+        return crownSnapshotId;
+    }
+
+    public int getXCrownSnapshotId() {
+        return xCrownSnapshotId;
     }
 }
